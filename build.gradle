@@ -1,8 +1,18 @@
 group 'de.itemis.webengineering.blog'
 version '1.0-SNAPSHOT'
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.2.1'
-    distributionType = 'all'
-}
+subprojects {
+    apply plugin: 'java'
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compile 'com.google.guava:guava:23.0'
+        testCompile 'junit:junit:4.12'
+        testCompile 'org.assertj:assertj-core:3.8.0'
+    }
+}
