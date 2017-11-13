@@ -9,8 +9,7 @@ public class CapitalizeUtilTest
 {
     @Test
     public void shouldCapitalizeSingleCharacter()
-    {
-        //given
+    {   //given
         final String singleCharacter = "c";
         //when
         final String result = CapitalizeUtil.capitalize(singleCharacter);
@@ -21,8 +20,7 @@ public class CapitalizeUtilTest
 
     @Test
     public void shouldCapitalizeWord()
-    {
-        //given
+    {   //given
         final String wordToCapitalize = "hello";
         //when
         final String result = CapitalizeUtil.capitalize(wordToCapitalize);
@@ -33,8 +31,7 @@ public class CapitalizeUtilTest
     }
     @Test
     public void shouldNotChangeCapitalizedString()
-    {
-        //given
+    {   //given
         final String capitalizedString = "HELLO";
         //when
         final String result = CapitalizeUtil.capitalize(capitalizedString);
@@ -45,8 +42,7 @@ public class CapitalizeUtilTest
 
     @Test
     public void shouldReturnEmptyString()
-    {
-        //given
+    {   //given
         final String capitalizedString = "";
         //when
         final String result = CapitalizeUtil.capitalize(capitalizedString);
