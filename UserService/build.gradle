@@ -1,0 +1,9 @@
+apply from: '../service.gradle'
+
+dependencies {
+    compile 'com.datastax.cassandra:cassandra-driver-core:3.3.0'
+    compile 'io.netty:netty-all:4.1.6.Final'
+    compile 'org.springframework.data:spring-data-cassandra'
+    compile 'org.springframework.boot:spring-boot-configuration-processor'
+    testCompile 'org.cassandraunit:cassandra-unit-spring:3.3.0.2'
+}
