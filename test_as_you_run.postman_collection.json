@@ -1,0 +1,116 @@
+{
+	"info": {
+		"name": "test_as_you_run",
+		"_postman_id": "ee753341-5774-3d66-1abb-01881a8a5530",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "UserService",
+			"description": "",
+			"item": [
+				{
+					"name": "userservice_createuser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "firstname",
+									"value": "bruce",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "lastname",
+									"value": "wayne",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost.:4583/createuser",
+							"host": [
+								"localhost"
+							],
+							"port": "4583",
+							"path": [
+								"createuser"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "userservice_getusersbylastname",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "firstname",
+									"value": "holger",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "lastname",
+									"value": "schill",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4583/getusersbylastname/wayne",
+							"host": [
+								"localhost"
+							],
+							"port": "4583",
+							"path": [
+								"getusersbylastname",
+								"wayne"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CapitalizeService",
+			"description": "",
+			"item": [
+				{
+					"name": "capitalize",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:3491/capitalize/test",
+							"host": [
+								"localhost"
+							],
+							"port": "3491",
+							"path": [
+								"capitalize",
+								"test"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -7,3 +7,29 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-configuration-processor'
     testCompile 'org.cassandraunit:cassandra-unit-spring:3.3.0.2'
 }
+
+task bootRunDebugWithCassandra(type: org.springframework.boot.gradle.run.BootRunTask) {
+    group = 'Application'
+    doFirst() {
+        main = project.mainClassName
+        classpath = sourceSets.main.runtimeClasspath
+
+        def serviceinfos = dockerCompose.debugWithCassandra.servicesInfos
+        def cassandrainfos = serviceinfos.cassandra
+        def cassandrahost = cassandrainfos.firstContainer.inspection.NetworkSettings.Networks.entrySet().iterator().next().getValue().IPAddress
+        def cassandraport = cassandrainfos.ports[9042]
+
+        environment 'cassandra.host', cassandrahost + ',' + cassandrainfos.host
+        environment 'cassandra.port', cassandraport
+        environment 'cassandra.keyspace', 'test'
+    }
+}
+
+apply plugin: 'docker-compose'
+
+dockerCompose {
+    debugWithCassandra {
+        useComposeFiles = ['docker-compose-debug.yml']
+        isRequiredBy(this.tasks.getByName('bootRunDebugWithCassandra'))
+    }
+}
