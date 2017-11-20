@@ -15,13 +15,7 @@ task bootRunDebugWithCassandra(type: org.springframework.boot.gradle.run.BootRun
         classpath = sourceSets.main.runtimeClasspath
 
         def serviceinfos = dockerCompose.debugWithCassandra.servicesInfos
-        def cassandrainfos = serviceinfos.cassandra
-        def cassandrahost = cassandrainfos.firstContainer.inspection.NetworkSettings.Networks.entrySet().iterator().next().getValue().IPAddress
-        def cassandraport = cassandrainfos.ports[9042]
-
-        environment 'cassandra.host', cassandrahost + ',' + cassandrainfos.host
-        environment 'cassandra.port', cassandraport
-        environment 'cassandra.keyspace', 'test'
+        setCassandraEnv(serviceinfos, environment)
     }
 }
 
@@ -32,4 +26,24 @@ dockerCompose {
         useComposeFiles = ['docker-compose-debug.yml']
         isRequiredBy(this.tasks.getByName('bootRunDebugWithCassandra'))
     }
+    integrationTestWithCassandra {
+        useComposeFiles = ['docker-compose-integrationtest.yml']
+        isRequiredBy(this.tasks.getByName('integrationTest'))
+        removeContainers = true
+    }
+}
+
+integrationTest.doFirst {
+    def serviceinfos = dockerCompose.integrationTestWithCassandra.servicesInfos
+    setCassandraEnv(serviceinfos, environment)
+}
+
+def setCassandraEnv(serviceinfos, environment) {
+    def cassandrainfos = serviceinfos.cassandra
+    def cassandrahost = cassandrainfos.firstContainer.inspection.NetworkSettings.Networks.entrySet().iterator().next().getValue().IPAddress
+    def cassandraport = cassandrainfos.ports[9042]
+
+    environment.put('cassandra.host', cassandrahost + ',' + cassandrainfos.host)
+    environment.put('cassandra.port', cassandraport)
+    environment.put('cassandra.keyspace', 'test')
 }
