@@ -1,0 +1,51 @@
+apply from: '../service.gradle'
+
+dependencies {
+    compile 'org.springframework.boot:spring-boot-configuration-processor'
+}
+
+apply plugin: 'docker-compose'
+
+dockerCompose {
+    useComposeFiles = ['bff-docker-compose.yml']
+}
+
+task bootRunDebugWithDependencies(type: org.springframework.boot.gradle.run.BootRunTask) {
+    group = 'Application'
+    doFirst() {
+        main = project.mainClassName
+        classpath = sourceSets.main.runtimeClasspath
+
+        setDependenciesEnv(environment)
+    }
+}
+dockerCompose.isRequiredBy(bootRunDebugWithDependencies)
+
+integrationTest.doFirst {
+    setDependenciesEnv(environment)
+}
+dockerCompose.isRequiredBy(integrationTest)
+
+def setDependenciesEnv(environment) {
+    def serviceinfos = dockerCompose.servicesInfos
+
+    def userserviceinfos = serviceinfos.userservice
+    def userservicehost = userserviceinfos.host
+    def userserviceport = userserviceinfos.ports[4583]
+
+    def capserviceinfos = serviceinfos.capitalizeservice
+    def capservicehost = capserviceinfos.host
+    def capserviceport = capserviceinfos.ports[3491]
+
+    environment.put('capitalizeservice.host', capservicehost)
+    environment.put('capitalizeservice.port', capserviceport)
+    environment.put('userservice.host', userservicehost)
+    environment.put('userservice.port', userserviceport)
+
+}
+
+integrationTest.dependsOn(':UserService:buildDockerForIntegrationTest')
+integrationTest.dependsOn(':CapitalizeService:buildDockerForIntegrationTest')
+
+composeUp.mustRunAfter(':CapitalizeService:buildDockerForIntegrationTest')
+composeUp.mustRunAfter(':UserService:buildDockerForIntegrationTest')

@@ -2,3 +2,4 @@ rootProject.name = 'test-as-you-run'
 
 include 'CapitalizeService'
 include 'UserService'
+include 'BFFService'

@@ -111,6 +111,69 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "BffService",
+			"description": "",
+			"item": [
+				{
+					"name": "bffservice_getusersbylastname",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost.:8550/getusersbylastname/doe",
+							"host": [
+								"localhost"
+							],
+							"port": "8550",
+							"path": [
+								"getusersbylastname",
+								"doe"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "bffservice_createuser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "firstname",
+									"value": "bruce",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "lastname",
+									"value": "wayne",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost.:4583/createuser",
+							"host": [
+								"localhost"
+							],
+							"port": "4583",
+							"path": [
+								"createuser"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

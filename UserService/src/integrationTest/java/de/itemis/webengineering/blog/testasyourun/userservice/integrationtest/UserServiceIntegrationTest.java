@@ -49,8 +49,9 @@ public class UserServiceIntegrationTest
         final User martha = new User("martha", "wayne");
         final User thomas = new User("thomas", "wayne");
 
-        //when
         final String getWaynesRequest = UserController.GET_USERS_BY_LAST_NAME_PATH + "/" + bruce.getLastName();
+
+        //when
         final User[] users = this.restTemplate.getForObject(getWaynesRequest, new User[]{}.getClass());
         //then
         assertThat(users).hasSize(3);

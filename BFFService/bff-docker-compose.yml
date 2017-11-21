@@ -1,0 +1,20 @@
+version: '3'
+services:
+    cassandra:
+        image: usercassandra:latest
+        expose:
+            - 9042
+    userservice:
+        image: testasyourun/userservice:integrationtest
+        ports:
+            - 4583
+        depends_on:
+                - cassandra
+        environment:
+          - cassandra.host=cassandra
+          - cassandra.keyspace=test
+          - cassandra.port=9042
+    capitalizeservice:
+             image: testasyourun/capitalizeservice:integrationtest
+             ports:
+              - 3491

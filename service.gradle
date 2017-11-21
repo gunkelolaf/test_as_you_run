@@ -1,6 +1,6 @@
-
 apply plugin: 'org.springframework.boot'
 apply plugin: 'org.unbroken-dome.test-sets'
+apply plugin: 'docker'
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
@@ -12,3 +12,17 @@ testSets {
 }
 integrationTest.mustRunAfter(test)
 build.dependsOn(integrationTest)
+
+docker {
+    group = 'testasyourun'
+    baseImage "openjdk:8-jre"
+}
+
+task buildDockerForIntegrationTest(type: Docker, dependsOn: build) {
+    version = 'integrationtest'
+    applicationName = jar.getBaseName().toLowerCase()
+    entryPoint(['java', '-jar', "${jar.archiveName}"])
+    addFile {
+        from jar
+    }
+}
